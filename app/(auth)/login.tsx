@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, KeyboardAvoidingView, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, Input } from '../../components';
 import { useAuth } from '../../contexts';
@@ -39,33 +39,43 @@ export default function LoginScreen() {
   };
 
   const handleForgotPassword = () => {
-    Alert.alert('Forgot Password', 'Password reset functionality would be implemented here');
+    router.push('/(auth)/forget-password' as any);
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-gray-50">
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="flex-1"
       >
-        <View className="flex-1 px-6">
+        <View className="flex-1 px-6 bg-white">
+          {/* Illustration */}
+          <View className="items-center pt-8 pb-6">
+            <View className="w-64 h-48 rounded-2xl items-center justify-center ">
+              <Image 
+                source={require('../../assets/pics/bus.png')} 
+                className="w-48 h-48 rounded-xl"
+                resizeMode="cover"
+              />
+            </View>
+          </View>
+
           {/* Header */}
-          <View className="pt-8 pb-12">
-            <Text className="text-4xl font-bold text-gray-900 mb-2">Welcome Back</Text>
-            <Text className="text-lg text-gray-600">Sign in to your account</Text>
+          <View className="items-center pb-8">
+            <Text className="text-3xl font-bold text-gray-900 mb-2">Sign In</Text>
+            <Text className="text-gray-600 text-center">Enter valid user name & password to continue.</Text>
           </View>
 
           {/* Form */}
           <View className="flex-1">
             <Input
-              label="Email"
-              placeholder="Enter your email"
+              label="User name"
+              placeholder="Enter your username"
               value={email}
               onChangeText={setEmail}
-              keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
-              icon="mail-outline"
+              icon="person-outline"
             />
 
             <Input
@@ -81,12 +91,12 @@ export default function LoginScreen() {
 
             {/* Forgot Password */}
             <TouchableOpacity onPress={handleForgotPassword} className="self-end mb-8">
-              <Text className="text-blue-500 font-medium">Forgot Password?</Text>
+              <Text className="text-blue-500 font-medium">Forget password</Text>
             </TouchableOpacity>
 
             {/* Login Button */}
             <Button
-              title={isLoading ? 'Signing In...' : 'Sign In'}
+              title={isLoading ? 'Signing In...' : 'Login'}
               onPress={handleLogin}
               disabled={isLoading}
               loading={isLoading}
@@ -97,9 +107,9 @@ export default function LoginScreen() {
 
           {/* Sign Up Link */}
           <View className="flex-row justify-center items-center pb-8">
-            <Text className="text-gray-600">Don't have an account? </Text>
+            <Text className="text-gray-600">Haven't any account? </Text>
             <TouchableOpacity onPress={handleSignUp}>
-              <Text className="text-blue-500 font-semibold">Sign Up</Text>
+              <Text className="text-blue-500 font-semibold">Sign up</Text>
             </TouchableOpacity>
           </View>
         </View>
