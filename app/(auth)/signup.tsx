@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import React, { useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button, Input } from '../../components';
 import { useAuth } from '../../contexts';
@@ -74,24 +74,35 @@ export default function SignUpScreen() {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-gray-50">
       <KeyboardAvoidingView 
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="flex-1"
       >
         <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
-          <View className="px-6">
+          <View className="px-6 bg-white">
+            {/* Illustration */}
+            <View className="items-center pt-8 pb-6">
+              <View className="w-64 h-48 rounded-2xl items-center justify-center">
+                <Image 
+                  source={require('../../assets/pics/bus.png')} 
+                  className="w-48 h-48 rounded-xl"
+                  resizeMode="cover"
+                />
+              </View>
+            </View>
+
             {/* Header */}
-            <View className="pt-8 pb-6">
-              <Text className="text-4xl font-bold text-gray-900 mb-2">Create Account</Text>
-              <Text className="text-lg text-gray-600">Sign up to get started</Text>
+            <View className="items-center pb-8">
+              <Text className="text-3xl font-bold text-gray-900 mb-2">Sign Up</Text>
+              <Text className="text-gray-600 text-center">Fill all the details to continue.</Text>
             </View>
 
             {/* Form */}
             <View className="pb-8">
               {/* Name Field */}
               <Input
-                label="Full Name"
+                label="Full name"
                 placeholder="Enter your full name"
                 value={formData.name}
                 onChangeText={(value) => handleInputChange('name', value)}
@@ -100,7 +111,7 @@ export default function SignUpScreen() {
               />
 
               <Input
-                label="Email"
+                label="Email address"
                 placeholder="Enter your email"
                 value={formData.email}
                 onChangeText={(value) => handleInputChange('email', value)}
@@ -153,8 +164,8 @@ export default function SignUpScreen() {
                   {agreeToTerms && <Text className="text-white text-xs">✓</Text>}
                 </View>
                 <Text className="text-gray-600 flex-1">
-                  I agree to the{' '}
-                  <Text className="text-blue-500 font-medium">Terms and Conditions</Text>
+                  By signing up, you are agree to our{' '}
+                  <Text className="text-blue-500 font-medium">Terms & Conditions</Text>
                   {' '}and{' '}
                   <Text className="text-blue-500 font-medium">Privacy Policy</Text>
                 </Text>
@@ -173,9 +184,9 @@ export default function SignUpScreen() {
 
             {/* Login Link */}
             <View className="flex-row justify-center items-center pb-8">
-              <Text className="text-gray-600">Already have an account? </Text>
+              <Text className="text-gray-600">Already have an Account? </Text>
               <TouchableOpacity onPress={handleLogin}>
-                <Text className="text-blue-500 font-semibold">Sign In</Text>
+                <Text className="text-blue-500 font-semibold">Sign in</Text>
               </TouchableOpacity>
             </View>
           </View>

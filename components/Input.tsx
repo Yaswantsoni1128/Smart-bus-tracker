@@ -34,7 +34,7 @@ export default function Input({
   return (
     <View className="mb-6">
       <Text className="text-gray-700 font-medium mb-2">{label}</Text>
-      <View className="flex-row items-center bg-gray-100 rounded-lg px-4 py-3">
+      <View className="flex-row items-center bg-gray-100 rounded-3xl px-4 py-3">
         {icon && <Ionicons name={icon} size={20} color="#6B7280" />}
         <TextInput
           className={`flex-1 ${icon ? 'ml-3' : ''} text-gray-900`}
