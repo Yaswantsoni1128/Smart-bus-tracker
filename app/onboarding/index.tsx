@@ -1,46 +1,33 @@
-import { router } from 'expo-router';
-import React, { useState } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Button, OnboardingCard, PaginationDots } from '../../components';
-import { useAuth } from '../../contexts';
-import { ONBOARDING_DATA } from '../../lib';
+import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { OnboardingCard, PaginationDots } from "../../components";
+import { useAuth } from "../../contexts";
+import { ONBOARDING_DATA } from "../../lib";
 
 export default function OnboardingScreen() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { completeOnboarding } = useAuth();
+  const router = useRouter();
 
   const handleNext = async () => {
     if (currentIndex < ONBOARDING_DATA.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
-      // Complete onboarding and navigate to login
       await completeOnboarding();
-      router.replace('/(auth)/login' as any);
+      router.replace("/(auth)/login" as any);
     }
   };
 
   const handleSkip = async () => {
     await completeOnboarding();
-    router.replace('/(auth)/login' as any);
-  };
-
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
+    router.replace("/(auth)/login" as any);
   };
 
   return (
     <SafeAreaView className="flex-1 bg-white">
       <View className="flex-1 px-6">
-        {/* Skip Button */}
-        <View className="flex-row justify-end pt-4">
-          <TouchableOpacity onPress={handleSkip}>
-            <Text className="text-gray-500 text-base font-medium">Skip</Text>
-          </TouchableOpacity>
-        </View>
-
         {/* Content */}
         <View className="flex-1 justify-center items-center">
           <OnboardingCard
@@ -51,23 +38,31 @@ export default function OnboardingScreen() {
         </View>
 
         {/* Pagination Dots */}
-        <PaginationDots totalDots={ONBOARDING_DATA.length} activeIndex={currentIndex} />
+        <PaginationDots
+          totalDots={ONBOARDING_DATA.length}
+          activeIndex={currentIndex}
+        />
 
-        {/* Navigation Buttons */}
-        <View className="flex-row justify-between items-center pb-8">
-          <Button
-            title="Previous"
-            onPress={handlePrevious}
-            variant="outline"
-            disabled={currentIndex === 0}
-            className={currentIndex === 0 ? 'opacity-0' : ''}
-          />
-
-          <Button
-            title={currentIndex === ONBOARDING_DATA.length - 1 ? 'Get Started' : 'Next'}
+        {/* Bottom Buttons */}
+        <View className="items-center pb-10">
+          {/* Primary Blue Button */}
+          <TouchableOpacity
             onPress={handleNext}
-            className="flex-1 ml-4"
-          />
+            className="bg-blue-400 w-full py-4 rounded-3xl items-center"
+          >
+            <Text className="text-white font-semibold text-lg">
+              {currentIndex === ONBOARDING_DATA.length - 1
+                ? "Get Started"
+                : "Next"}
+            </Text>
+          </TouchableOpacity>
+
+          {/* Skip Link */}
+          <TouchableOpacity onPress={handleSkip} className="mt-1 border border-blue-400 w-full py-4 rounded-3xl items-center">
+            <Text className="text-black text-base font-medium ">
+              Skip & Get Started
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>

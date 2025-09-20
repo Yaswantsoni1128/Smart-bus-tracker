@@ -9,7 +9,7 @@ interface OnboardingCardProps {
 
 export default function OnboardingCard({ title, description, image }: OnboardingCardProps) {
   return (
-    <View className="items-center mb-12">
+    <View className="items-center">
       <Text className="text-6xl mb-6">{image}</Text>
       <Text className="text-3xl font-bold text-gray-900 text-center mb-4">
         {title}
